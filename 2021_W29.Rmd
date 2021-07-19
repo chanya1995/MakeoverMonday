@@ -4,9 +4,9 @@ author: chanya
 output: html_notebook
 ---
 
-#UK COVID-19 Mortality Rate by Ethnicity
+# UK COVID-19 Mortality Rate by Ethnicity
 
-```{r load packages}
+```{r load packages, echo=TRUE, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(gcookbook)
 library(ggalt)
@@ -16,7 +16,7 @@ library(ggalt)
 full <- read_csv("covid-mortality.csv")
 ```
 
-```{r}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 average <- full %>% 
   filter(Measure == "Average") %>% ##focus on the 'average' measure for now
   rename(ethnic = "Ethnic group") 
@@ -41,7 +41,7 @@ size=1, color="#b2b2b2", size_x=2, size_xend = 2, colour_x = "#56B4E9", colour_x
   labs(x=NULL, y=NULL, title="Minority ethnicities are more likely to die from COVID-19 than the White",
        subtitle="Covid death index ranges of each ethnicity-gender combination when compared to the baseline (White)?",
        caption="#MakeoverMonday | Source: Information is Beautiful via UK Office for National Statistics") +
-  theme_bw(base_family="Playfair Display") +
+  theme_bw(base_family="Playfair Display") + ## adding theme
   theme(
   panel.grid.major=element_blank(),
   panel.grid.minor=element_blank(),
@@ -55,25 +55,18 @@ size=1, color="#b2b2b2", size_x=2, size_xend = 2, colour_x = "#56B4E9", colour_x
 
 ```
 
-```{r}
-library(ggrepel)
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 average_plot +
   geom_point(aes(x=Value, y=ethgen, label=Value), shape=21, size=5, color="#b2b2b2", fill="white") +
   geom_text(aes(x=Value, y=ethgen, label=Value),size=2,family="Playfair Display")
 ggsave("2021_W29.png")
 ```
 
-  geom_label_repel(aes(x=Value, y=ethgen,label = Value),
-                  box.padding   = 0.35, 
-                  point.padding = 0.5,
-                  segment.color = 'grey50',
-                  size=2)
 
 ### Data Source
 [data.world](https://data.world/makeovermonday/2021w29)
 
-
 ### Helpful Links
-[how to concatenate](https://www.marsja.se/how-to-concatenate-two-columns-or-more-in-r-stringr-tidyr/#:~:text=columns%20in%20R.-,How%20do%20I%20concatenate%20two%20columns%20in%20R%3F,B))
-[how to dumbbell plot](https://towardsdatascience.com/create-dumbbell-plots-to-visualize-group-differences-in-r-3536b7d0a19a)
-[how to reorder factor](https://www.r-graph-gallery.com/267-reorder-a-variable-in-ggplot2.html)
+* [how to concatenate](https://www.marsja.se/how-to-concatenate-two-columns-or-more-in-r-stringr-tidyr/#:~:text=columns%20in%20R.-,How%20do%20I%20concatenate%20two%20columns%20in%20R%3F,B)
+* [how to dumbbell plot](https://towardsdatascience.com/create-dumbbell-plots-to-visualize-group-differences-in-r-3536b7d0a19a)
+* [how to reorder factor](https://www.r-graph-gallery.com/267-reorder-a-variable-in-ggplot2.html)
